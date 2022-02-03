@@ -13,7 +13,7 @@ class AccountAdmin(admin.ModelAdmin):
         request: WSGIRequest,
         obj: Optional[Account] = None
     ) -> tuple:
-        if not obj:
+        if obj:
             return self.readonly_fields + ('description',)
         return self.readonly_fields
 
