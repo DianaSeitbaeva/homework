@@ -30,14 +30,15 @@ class GroupAdmin(admin.ModelAdmin):
 
 class StudentAdmin(admin.ModelAdmin):
     readonly_fields = ()
+    MAX_STUDENT_AGE = 16
 
     def get_readonly_fields(
         self,
         request: WSGIRequest,
         obj: Optional[Student] = None
     ) -> tuple:
-        if obj:
-            return self.readonly_fields + ('account',)
+        if obj and obj.age > self.MAX_STUDENT_AGE:
+            return self.readonly_fields + ('age',)
         return self.readonly_fields
 
 admin.site.register(
