@@ -5,8 +5,7 @@ from django.contrib import admin
 from .models import Account, Group, Student
 
 class AccountAdmin(admin.ModelAdmin):
-    readonly_fields = (
-    )
+    readonly_fields = ()
 
     def get_readonly_fields(
         self,
