@@ -17,8 +17,7 @@ class AccountAdmin(admin.ModelAdmin):
         return self.readonly_fields
 
 class GroupAdmin(admin.ModelAdmin):
-    readonly_fields = (
-    )
+    readonly_fields = ()
 
     def get_readonly_fields(
         self,
@@ -30,8 +29,7 @@ class GroupAdmin(admin.ModelAdmin):
         return self.readonly_fields
 
 class StudentAdmin(admin.ModelAdmin):
-    readonly_fields = (
-    )
+    readonly_fields = ()
 
     def get_readonly_fields(
         self,
