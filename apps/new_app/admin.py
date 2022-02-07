@@ -32,14 +32,40 @@ class StudentAdmin(admin.ModelAdmin):
     readonly_fields = ()
     MAX_STUDENT_AGE = 16
 
+    def student_age_validation(
+        self,
+        obj:Optional[Student]
+    ) -> tuple:
+        if obj and obj.age <= self.MAX_STUDENT_AGE:
+            return self.readonly_fields + ('age',)
+        return self.readonly_fields
+
+    def student_age_validation_2(
+        self,
+        obj: Optional[Student]
+    ) -> bool:
+        if obj and obj.age <= self.MAX_STUDENT_AGE:
+            return True
+        return False
+
+        #Подкапотный движ:
+        #return a.k.a return None
+
     def get_readonly_fields(
         self,
         request: WSGIRequest,
         obj: Optional[Student] = None
     ) -> tuple:
-        if obj and obj.age > self.MAX_STUDENT_AGE:
-            return self.readonly_fields + ('age',)
-        return self.readonly_fields
+    
+        result: tuple = self.student_age_validation(obj)
+        return result
+
+        #result: bool = self.student_age_validation_2(obj)
+        #if result:
+            #return self.readonly_fields + ('age',)
+        #return self.readonly_fields
+
+        
 
 admin.site.register(
     Account, AccountAdmin
