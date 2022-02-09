@@ -2,7 +2,7 @@ from typing import Optional
 
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib import admin
-from .models import Account, Group, Student
+from .models import Account, Group, Student, Professor
 
 class AccountAdmin(admin.ModelAdmin):
     readonly_fields = ()
@@ -65,6 +65,18 @@ class StudentAdmin(admin.ModelAdmin):
             #return self.readonly_fields + ('age',)
         #return self.readonly_fields
 
+
+class ProfessorAdmin(admin.ModelAdmin):
+    readonly_fields = ()
+
+    def get_readonly_fields(
+        self,
+        request: WSGIRequest,
+        obj: Optional[Professor] = None
+    ) -> tuple:
+        if obj:
+            return self.readonly_fields + ('full_name',)
+        return self.readonly_fields
         
 
 admin.site.register(
@@ -77,4 +89,8 @@ admin.site.register(
 
 admin.site.register(
     Student, StudentAdmin 
+)
+
+admin.site.register(
+    Professor, ProfessorAdmin 
 )
