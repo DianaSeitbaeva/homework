@@ -5,7 +5,11 @@ from django.contrib import admin
 from .models import Account, Group, Student, Professor
 
 class AccountAdmin(admin.ModelAdmin):
-    readonly_fields = ()
+    readonly_fields = (
+        'datetime_created',
+        'datetime_updated',
+        'datetime_deleted'
+    )
 
     def get_readonly_fields(
         self,
@@ -17,19 +21,27 @@ class AccountAdmin(admin.ModelAdmin):
         return self.readonly_fields
 
 class GroupAdmin(admin.ModelAdmin):
-    readonly_fields = ()
+    readonly_fields = (
+        'datetime_created',
+        'datetime_updated',
+        'datetime_deleted'
+    )
 
-    def get_readonly_fields(
-        self,
-        request: WSGIRequest,
-        obj: Optional[Group] = None
-    ) -> tuple:
-        if obj:
-            return self.readonly_fields + ('name',)
-        return self.readonly_fields
+    # def get_readonly_fields(
+    #     self,
+    #     request: WSGIRequest,
+    #     obj: Optional[Group] = None
+    # ) -> tuple:
+    #     if obj:
+    #         return self.readonly_fields + ('name',)
+    #     return self.readonly_fields
 
 class StudentAdmin(admin.ModelAdmin):
-    readonly_fields = ()
+    readonly_fields = (
+        'datetime_created',
+        'datetime_updated',
+        'datetime_deleted'
+    )
     MAX_STUDENT_AGE = 16
 
     def student_age_validation(
@@ -67,7 +79,11 @@ class StudentAdmin(admin.ModelAdmin):
 
 
 class ProfessorAdmin(admin.ModelAdmin):
-    readonly_fields = ()
+    readonly_fields = (
+        'datetime_created',
+        'datetime_updated',
+        'datetime_deleted'
+    )
 
     def get_readonly_fields(
         self,

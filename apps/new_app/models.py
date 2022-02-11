@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from abstracts.models import AbstractDateTime
+from django.db.models import QuerySet
 
-class Account(models.Model):
+class Account(AbstractDateTime):
     ACCOUNT_FULL_NAME_MAX_LENGTH = 20
     user = models.OneToOneField(
         User,
@@ -12,6 +14,7 @@ class Account(models.Model):
         max_length=ACCOUNT_FULL_NAME_MAX_LENGTH
     )
     description = models.TextField()
+
 
     def __str__(self) -> str:
         return f'Account: {self.user.id} / {self.full_name}'
@@ -23,11 +26,13 @@ class Account(models.Model):
         verbose_name = 'Аккаунт'
         verbose_name_plural = 'Аккаунты'
 
-class Group(models.Model):
+class Group(AbstractDateTime):
     GROUP_NAME_MAX_LENGTH = 10
     name = models.CharField(
         max_length=GROUP_NAME_MAX_LENGTH
     )
+
+
     def __str__(self) -> str:
         return f'Group: {self.name}' 
 
@@ -40,8 +45,11 @@ class Group(models.Model):
         verbose_name_plural = 'Группы'
 
 
+class StudentQuerySet(QuerySet):
 
-class Student(models.Model):
+
+
+class Student(AbstractDateTime):
     MAX_AGE = 27
     #один аккаунт = много студентов
 
@@ -73,6 +81,19 @@ class Student(models.Model):
             )
             #self.age = self.MAX_AGE
         super().save(*args, **kwargs)
+
+    def delete(self) -> None:
+        breakpoint()
+        datetime_now: datetime = datetime.now()
+
+        self.datetime_deleted = datetime_now
+
+        self.save(
+            update_fields = ['datetime_deleted']
+        )
+
+            
+        self.save()
     
     class Meta:
         ordering = (
@@ -85,7 +106,7 @@ class Student(models.Model):
         verbose_name_plural = 'Студенты'
 
 
-class Professor(models.Model):
+class Professor(AbstractDateTime):
     FULL_NAME_MAX_LENGTH = 20
 
     TOPIC_JAVA = 'java'

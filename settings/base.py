@@ -44,6 +44,7 @@ DJANGO_AND_THIRD_PARTY_APPS = [
 
 PROJECT_APPS = [
     'new_app.apps.NewAppConfig',
+    'abstracts.apps.AbstractsConfig',
 
 ]
 
