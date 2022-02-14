@@ -42,6 +42,19 @@ class StudentAdmin(admin.ModelAdmin):
         'datetime_updated',
         'datetime_deleted'
     )
+    list_filter = (
+        'age',
+        'gpa',
+    )
+    search_field = (
+        'account__full_name',
+    )
+    list_display = (
+        'account__full_name',
+        'age',
+        'gpa',
+    )
+
     MAX_STUDENT_AGE = 16
 
     def student_age_validation(

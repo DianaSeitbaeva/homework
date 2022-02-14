@@ -4,6 +4,15 @@ from django.core.exceptions import ValidationError
 from abstracts.models import AbstractDateTime
 from django.db.models import QuerySet
 
+
+class AccountQuerySet(QuerySet):
+
+    def get_superusers(self) -> QuerySet:
+        return self.filter(
+            user__is_superuser=True
+        )
+
+
 class Account(AbstractDateTime):
     ACCOUNT_FULL_NAME_MAX_LENGTH = 20
     user = models.OneToOneField(
@@ -15,6 +24,7 @@ class Account(AbstractDateTime):
     )
     description = models.TextField()
 
+    objects = AccountQuerySet().as_manager()
 
     def __str__(self) -> str:
         return f'Account: {self.user.id} / {self.full_name}'
@@ -26,12 +36,20 @@ class Account(AbstractDateTime):
         verbose_name = 'Аккаунт'
         verbose_name_plural = 'Аккаунты'
 
+class GroupQuerySet(QuerySet):
+    HIGH_GPA_LEVEL = 4.0
+
+    def get_students_with_high_gpa(self) -> QuerySet:
+        return self.filter(
+            self.Student_set().GPA__gte=self.HIGH_GPA_LEVEL
+        )
+
 class Group(AbstractDateTime):
     GROUP_NAME_MAX_LENGTH = 10
     name = models.CharField(
         max_length=GROUP_NAME_MAX_LENGTH
     )
-
+    objects = GroupQuerySet().as_manager()
 
     def __str__(self) -> str:
         return f'Group: {self.name}' 
@@ -46,7 +64,13 @@ class Group(AbstractDateTime):
 
 
 class StudentQuerySet(QuerySet):
+    ADULT_AGE = 18
+    HIGH_GPA_LEVEL = 4.0
 
+    def get_adult_students(self) -> QuerySet:
+        return self.filter(
+            age__gte=self.ADULT_AGE
+        )
 
 
 class Student(AbstractDateTime):
@@ -66,9 +90,11 @@ class Student(AbstractDateTime):
     GPA=models.FloatField(
         'Средний значение GPA'
     )
+    objects = StudentQuerySet().as_manager()
 
     def __str__(self) -> str:
         return f'Student: {self.account}, Age: {self.age}, group: {self.group}, GPA: {self.GPA}' 
+
 
     def save(
         self,
@@ -92,8 +118,6 @@ class Student(AbstractDateTime):
             update_fields = ['datetime_deleted']
         )
 
-            
-        self.save()
     
     class Meta:
         ordering = (
