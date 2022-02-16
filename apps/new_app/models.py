@@ -36,20 +36,20 @@ class Account(AbstractDateTime):
         verbose_name = 'Аккаунт'
         verbose_name_plural = 'Аккаунты'
 
-class GroupQuerySet(QuerySet):
-    HIGH_GPA_LEVEL = 4.0
+# class GroupQuerySet(QuerySet):
+#     HIGH_GPA_LEVEL = 4.0
 
-    def get_students_with_high_gpa(self) -> QuerySet:
-        return self.filter(
-            self.Student_set().GPA__gte=self.HIGH_GPA_LEVEL
-        )
+#     def get_students_with_high_gpa(self) -> QuerySet:
+#         return self.filter(
+#             self.Student_set().GPA__gte=self.HIGH_GPA_LEVEL
+#         )
 
 class Group(AbstractDateTime):
     GROUP_NAME_MAX_LENGTH = 10
     name = models.CharField(
         max_length=GROUP_NAME_MAX_LENGTH
     )
-    objects = GroupQuerySet().as_manager()
+    #objects = GroupQuerySet().as_manager()
 
     def __str__(self) -> str:
         return f'Group: {self.name}' 
