@@ -27,3 +27,15 @@ def index_2(request: WSGIRequest) -> HttpResponse:
     return HttpResponse(
         '<h1>Страница: Стартовая</h1>'
     )
+
+def index_3(request: WSGIRequest) -> HttpResponse:
+    users: QuerySet = User.objects.all()
+    context: dict = {
+        'ctx_title': 'Главная страница',
+        'ctx_users' : users,
+    }
+    return render(
+        request,
+        'index.html',
+        context,
+    )
