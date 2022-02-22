@@ -131,5 +131,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = "./apps/new_app/static"
 
 ADMIN_SITE_URL = '9e456d4sfsdf'

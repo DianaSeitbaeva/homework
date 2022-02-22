@@ -39,3 +39,17 @@ def index_3(request: WSGIRequest) -> HttpResponse:
         'index.html',
         context,
     )
+
+def admin(request: WSGIRequest) -> HttpResponse:
+    return render(
+        request,
+        'admin.html',
+        context = {"ctx_users":User.objects.all()}
+    )
+
+def show(request: WSGIRequest) -> HttpResponse:
+    return render(
+        request,
+        'show.html',
+        context,
+    )
