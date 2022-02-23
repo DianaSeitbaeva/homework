@@ -13,4 +13,4 @@ urlpatterns = [
     path('admin/', views.admin),
     path('show/', views.show),
     
-]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
