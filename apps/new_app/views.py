@@ -28,7 +28,7 @@ def index_2(request: WSGIRequest) -> HttpResponse:
         '<h1>Страница: Стартовая</h1>'
     )
 
-def index_3(request: WSGIRequest) -> HttpResponse:
+def admin(request: WSGIRequest) -> HttpResponse:
     users: QuerySet = User.objects.all()
     context: dict = {
         'ctx_title': 'Главная страница',
@@ -36,20 +36,20 @@ def index_3(request: WSGIRequest) -> HttpResponse:
     }
     return render(
         request,
-        'index.html',
-        context,
-    )
-
-def admin(request: WSGIRequest) -> HttpResponse:
-    return render(
-        request,
         'admin.html',
-        context = {"ctx_users":User.objects.all()}
+        context,
     )
 
-def show(request: WSGIRequest) -> HttpResponse:
+def show(request: WSGIRequest, username: str) -> HttpResponse:
+    users: QuerySet = User.objects.get(
+        username=username
+    )
+    context: dict = {
+        'ctx_title': 'Профиль пользователя',
+        'ctx_users' : users,
+    }
     return render(
         request,
-        'show.html',
-        context,
+        template_name='show.html',
+        context=context,
     )

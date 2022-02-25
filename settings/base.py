@@ -143,3 +143,20 @@ STATIC_URL = '/static/'
 STATIC_ROOT = "./apps/new_app/static"
 
 ADMIN_SITE_URL = '9e456d4sfsdf'
+
+SHELL_PLUS_PRE_IMPORTS = [
+    ('django.db', ('connection', 'reset_queries', 'connections')),
+    ('datetime', ('datetime', 'timedelta', 'date')),
+    ('json', ('loads', 'dumps')),
+]
+SHELL_PLUS_MODEL_ALIASES = {
+    'university': {
+        'Student': 'S',
+        'Account': 'A',
+        'Group': 'G',
+        'Professor': 'P',
+    },
+}
+SHELL_PLUS = 'ipython'
+SHELL_PLUS_PRINT_SQL = True
+SHELL_PLUS_PRINT_SQL_TRUNCATE = 1000
