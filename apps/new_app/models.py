@@ -4,7 +4,6 @@ from django.core.exceptions import ValidationError
 from abstracts.models import AbstractDateTime
 from django.db.models import QuerySet
 
-
 class AccountQuerySet(QuerySet):
 
     def get_superusers(self) -> QuerySet:

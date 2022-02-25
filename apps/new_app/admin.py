@@ -1,8 +1,45 @@
 from typing import Optional
 
+from django.contrib.auth.models import User
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib import admin
 from .models import Account, Group, Student, Professor
+
+from django.contrib.auth.admin import UserAdmin
+
+
+
+class CustomUserAdmin(UserAdmin):
+    readonly_fields = ()
+
+    def get_readonly_fields(
+        self,
+        request: WSGIRequest,
+        obj: Optional[User] = None
+    ) -> tuple:
+        if not obj:
+            return self.readonly_fields
+
+        return self.readonly_fields + (
+            'first_name',
+            'last_name',
+            'email',
+            'username',
+            'is_active',
+            'is_staff',
+            'is_superuser',
+            'date_joined',
+            'last_login',
+        )
+
+admin.site.unregister(
+    User
+)
+admin.site.register(
+    User, CustomUserAdmin
+)
+
+
 
 class AccountAdmin(admin.ModelAdmin):
     readonly_fields = (
