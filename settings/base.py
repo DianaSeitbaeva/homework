@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import sys
 
+from . import get_env_variable
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,7 +25,7 @@ sys.path.append(os.path.join(BASE_DIR, 'apps'))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'cfkpknpwlzo8+9imu*6!g!+92vqaio0&c-cy+xgm3!wk_$o^)+'
+SECRET_KEY = get_env_variable('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -142,7 +144,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = "./apps/new_app/static"
 
-ADMIN_SITE_URL = '9e456d4sfsdf'
+ADMIN_SITE_URL = get_env_variable('ADMIN_SITE_URL')
 
 SHELL_PLUS_PRE_IMPORTS = [
     ('django.db', ('connection', 'reset_queries', 'connections')),
