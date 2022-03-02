@@ -3,10 +3,12 @@ from typing import Optional
 from django.contrib.auth.models import User
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib import admin
+from django.forms import ValidationError
+
+from auth.models import CustomUser
 from .models import Account, Group, Student, Professor
 
 from django.contrib.auth.admin import UserAdmin
-
 
 
 class CustomUserAdmin(UserAdmin):

@@ -152,7 +152,7 @@ SHELL_PLUS_PRE_IMPORTS = [
     ('json', ('loads', 'dumps')),
 ]
 SHELL_PLUS_MODEL_ALIASES = {
-    'university': {
+    'new_app': {
         'Student': 'S',
         'Account': 'A',
         'Group': 'G',
