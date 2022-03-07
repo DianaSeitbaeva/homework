@@ -3,41 +3,41 @@ import email
 from enum import unique
 
 from django.db import models
-from django.contrib.auth.models import User
+from auths.models import CustomUser
 from django.core.exceptions import ValidationError
 from abstracts.models import AbstractDateTime
 from django.db.models import QuerySet
 
-class AccountQuerySet(QuerySet):
+# class AccountQuerySet(QuerySet):
 
-    def get_superusers(self) -> QuerySet:
-        return self.filter(
-            user__is_superuser=True
-        )
+#     def get_superusers(self) -> QuerySet:
+#         return self.filter(
+#             user__is_superuser=True
+#         )
 
 
-class Account(AbstractDateTime):
-    ACCOUNT_FULL_NAME_MAX_LENGTH = 20
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE
-    )
-    full_name = models.CharField(
-        max_length=ACCOUNT_FULL_NAME_MAX_LENGTH
-    )
-    description = models.TextField()
+# class Account(AbstractDateTime):
+#     ACCOUNT_FULL_NAME_MAX_LENGTH = 20
+#     user = models.OneToOneField(
+#         User,
+#         on_delete=models.CASCADE
+#     )
+#     full_name = models.CharField(
+#         max_length=ACCOUNT_FULL_NAME_MAX_LENGTH
+#     )
+#     description = models.TextField()
 
-    objects = AccountQuerySet().as_manager()
+#     objects = AccountQuerySet().as_manager()
 
-    def __str__(self) -> str:
-        return f'Account: {self.user.id} / {self.full_name}'
+#     def __str__(self) -> str:
+#         return f'Account: {self.user.id} / {self.full_name}'
     
-    class Meta:
-        ordering = (
-            'full_name',
-            )
-        verbose_name = 'Аккаунт'
-        verbose_name_plural = 'Аккаунты'
+#     class Meta:
+#         ordering = (
+#             'full_name',
+#             )
+#         verbose_name = 'Аккаунт'
+#         verbose_name_plural = 'Аккаунты'
 
 # class GroupQuerySet(QuerySet):
 #     HIGH_GPA_LEVEL = 4.0
@@ -81,7 +81,7 @@ class Student(AbstractDateTime):
     #один аккаунт = много студентов
 
     account=models.OneToOneField(
-        Account, 
+        CustomUser, 
         on_delete=models.CASCADE)
 
     age=models.IntegerField(

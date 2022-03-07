@@ -1,12 +1,16 @@
 from typing import Optional
 
-from django.contrib.auth.models import User
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib import admin
 from django.forms import ValidationError
 
-from auth.models import CustomUser
-from .models import Account, Group, Student, Professor
+from auths.models import CustomUser
+from .models import (
+    # Account, 
+    Group, 
+    Student, 
+    Professor
+)
 
 from django.contrib.auth.admin import UserAdmin
 
@@ -17,7 +21,7 @@ class CustomUserAdmin(UserAdmin):
     def get_readonly_fields(
         self,
         request: WSGIRequest,
-        obj: Optional[User] = None
+        obj: Optional[CustomUser] = None
     ) -> tuple:
         if not obj:
             return self.readonly_fields
@@ -34,30 +38,28 @@ class CustomUserAdmin(UserAdmin):
             'last_login',
         )
 
-admin.site.unregister(
-    User
-)
-admin.site.register(
-    User, CustomUserAdmin
-)
+
+# admin.site.register(
+#     CustomUser, CustomUserAdmin
+# )
 
 
 
-class AccountAdmin(admin.ModelAdmin):
-    readonly_fields = (
-        'datetime_created',
-        'datetime_updated',
-        'datetime_deleted'
-    )
+# class AccountAdmin(admin.ModelAdmin):
+#     readonly_fields = (
+#         'datetime_created',
+#         'datetime_updated',
+#         'datetime_deleted'
+#     )
 
-    def get_readonly_fields(
-        self,
-        request: WSGIRequest,
-        obj: Optional[Account] = None
-    ) -> tuple:
-        if obj:
-            return self.readonly_fields + ('description',)
-        return self.readonly_fields
+#     def get_readonly_fields(
+#         self,
+#         request: WSGIRequest,
+#         obj: Optional[Account] = None
+#     ) -> tuple:
+#         if obj:
+#             return self.readonly_fields + ('description',)
+#         return self.readonly_fields
 
 class GroupAdmin(admin.ModelAdmin):
     readonly_fields = (
@@ -147,9 +149,9 @@ class ProfessorAdmin(admin.ModelAdmin):
         return self.readonly_fields
         
 
-admin.site.register(
-    Account, AccountAdmin
-)
+# admin.site.register(
+#     Account, AccountAdmin
+# )
 
 admin.site.register(
     Group, GroupAdmin

@@ -1,19 +1,19 @@
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
-from django.contrib.auth.models import User
+from auths.models import CustomUser
 from django.shortcuts import render
 
 from new_app.models import (
-    Account, 
+    # Account, 
     Student
 )
 
 def index(request: WSGIRequest) -> HttpResponse:
 
     
-    user: User = User.objects.first()
+    user: CustomUser = CustomUser.objects.first()
     username: str = user.username
-    acc: Account = Account.objects.get(user_id=user.id)
+    acc: CustomUser = CustomUser.objects.get(user_id=user.id)
     name: str = acc.full_name
     student: Student = Student.objects.get(account_id=user.id)
     gpa: int = student.GPA
@@ -29,7 +29,7 @@ def index_2(request: WSGIRequest) -> HttpResponse:
     )
 
 def admin(request: WSGIRequest) -> HttpResponse:
-    users: QuerySet = User.objects.all()
+    users: QuerySet = CustomUser.objects.all()
     context: dict = {
         'ctx_title': 'Главная страница',
         'ctx_users' : users,
@@ -41,7 +41,7 @@ def admin(request: WSGIRequest) -> HttpResponse:
     )
 
 def show(request: WSGIRequest, username: str) -> HttpResponse:
-    users: QuerySet = User.objects.get(
+    users: QuerySet = CustomUser.objects.get(
         username=username
     )
     context: dict = {
