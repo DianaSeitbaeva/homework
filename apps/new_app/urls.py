@@ -9,15 +9,13 @@ from . import views
 
 urlpatterns = [
 
-
     path('', views.index),
     path('admin/', views.admin, name='page_main'),
-    re_path(
-        r'^show/(?P<username>\w+)/$',
+    path(
+        'show/<int:user_id>/',
         views.show,
         name='page_show'
     ),
-    path('show/', views.show, name='page_show'),
     path('about/', views.show, name='page_about'),
     path('delete/', views.show, name='page_delete'),
 ]

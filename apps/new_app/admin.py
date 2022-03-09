@@ -14,7 +14,6 @@ from .models import (
 
 from django.contrib.auth.admin import UserAdmin
 
-
 class CustomUserAdmin(UserAdmin):
     readonly_fields = ()
 

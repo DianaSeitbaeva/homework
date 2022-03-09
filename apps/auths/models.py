@@ -1,4 +1,5 @@
 from datetime import datetime
+from distutils.command import upload
 import email
 from enum import unique
 from django.contrib.auth.models import (
@@ -8,7 +9,10 @@ from django.contrib.auth.models import (
 from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from django.core.exceptions import ValidationError
+from django.forms import BooleanField, CharField, FileField, ImageField
 from django.utils import timezone
+
+from apps.abstracts.models import AbstractDateTime
 
 
 class CustomUserManager(BaseUserManager):
@@ -66,3 +70,30 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         )
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+
+
+class File(AbstractDateTime):
+    title_file = models.CharField(
+        max_length=35,
+    )
+    file = models.FileField(
+        upload_to='',
+        max_length=150,
+    )
+    
+
+class Homework(AbstractDateTime):
+    title = models.CharField(
+        max_length=35,
+    ) 
+    subject = models.CharField(
+        max_length=35,
+    ) 
+    logo = models.ImageField()
+    is_checked = models.BooleanField(
+        max_length=35
+    )
+    homework = models.ForeignKey(
+        File, 
+        on_delete=models.PROTECT,
+    )
