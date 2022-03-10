@@ -23,16 +23,12 @@
                     <h1>Студент</h1>
                     <div class="info">
                         <span id="user__name">{{user.first_name}} {{user.last_name}}</span>
-                        <br>Login: {{user.username}} 
-                        <br>ID: {{ user.id }}
-                        <br>Username: {{ user.username }}
-                        <br> Role: 
-                        <span id="role">{% if user.is_superuser %}Admin{% else %}User{% endif %}</span>
+                        <br>Login: 
+                        <br>Role: <span id="role">
                     </div>
-                    <a class="edit" href="{% url 'page_show' user.username %}" role="button"> Профиль</a>
+                    <a class="edit" href="{% url 'page_show' user.id %}" role="button"> Профиль</a>
                     <a class="delete" href="{% url 'page_delete' %}" role="button"> Удалить</a>
-                    <!-- <button class="edit" onclick="show_profile()">Show</button>
-                    <button class="delete">Delete</button> -->
+                
                 </div>
             {% endfor %}
 
