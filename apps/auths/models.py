@@ -77,19 +77,21 @@ class File(AbstractDateTime):
         max_length=35,
     )
     file = models.FileField(
-        upload_to='',
+        upload_to='%d.%m.%Y',
         max_length=150,
     )
     
 
 class Homework(AbstractDateTime):
-    title = models.CharField(
+    title_homework = models.CharField(
         max_length=35,
     ) 
     subject = models.CharField(
         max_length=35,
     ) 
-    logo = models.ImageField()
+    logo = models.ImageField(
+        upload_to='%d.%m.%Y',
+    )
     is_checked = models.BooleanField(
         max_length=35
     )

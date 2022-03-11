@@ -32,7 +32,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 DJANGO_AND_THIRD_PARTY_APPS = [
@@ -144,6 +143,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = "./apps/new_app/static"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 ADMIN_SITE_URL = get_env_variable('ADMIN_SITE_URL')
 

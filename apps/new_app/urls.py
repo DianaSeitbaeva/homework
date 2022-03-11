@@ -18,4 +18,7 @@ urlpatterns = [
     ),
     path('about/', views.show, name='page_about'),
     path('delete/', views.show, name='page_delete'),
+    path('register/', views.register, name='page_register'),
+    path('login/',    views.login,    name='page_login'),
+    path('logout/',   views.logout,   name='page_logout'),
 ]

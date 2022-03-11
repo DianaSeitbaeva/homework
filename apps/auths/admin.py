@@ -5,7 +5,7 @@ from .forms import (
     CustomUserCreationForm,
     CustomUserChangeForm,
 )
-from auths.models import CustomUser
+from auths.models import CustomUser, File, Homework
 
 
 class CustomUserAdmin(UserAdmin):
@@ -41,7 +41,23 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ('email',)
     ordering = ('email',)
 
+class FileAdmin(admin.ModelAdmin):
+    readonly_fields=(
+        'title_file',
+        'file',
+    )
+
+class HomeworkAdmin(admin.ModelAdmin):
+    readonly_fields=(
+        'title_homework',
+        'subject',
+        'logo',
+    )
 
 admin.site.register(
-    CustomUser, CustomUserAdmin
+    File, FileAdmin
+)
+
+admin.site.register(
+    Homework, HomeworkAdmin
 )
