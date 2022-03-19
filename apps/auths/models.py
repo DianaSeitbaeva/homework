@@ -6,11 +6,22 @@ from django.contrib.auth.models import (
     AbstractBaseUser, 
     PermissionsMixin,
 )
-from django.db import models
+from django.db import (
+    models, 
+    QuerySet,
+)
+
 from django.contrib.auth.base_user import BaseUserManager
 from django.core.exceptions import ValidationError
-from django.forms import BooleanField, CharField, FileField, ImageField
+from django.forms import (
+    BooleanField, 
+    CharField, 
+    FileField, 
+    ImageField,
+)
+
 from django.utils import timezone
+
 
 from apps.abstracts.models import AbstractDateTime
 
@@ -99,3 +110,13 @@ class Homework(AbstractDateTime):
         File, 
         on_delete=models.PROTECT,
     )
+    user = models.ForeignKey(
+        CustomUser,
+        on_delete=models.PROTECT,
+    )
+
+class FileQuerySet(QuerySet):
+    def get_is_checked(self) -> QuerySet:
+        return self.filter(
+            homework__is_checked = True
+        )

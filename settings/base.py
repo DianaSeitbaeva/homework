@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import sys
-
 from . import get_env_variable
+
 
 AUTH_USER_MODEL = 'auths.CustomUser'
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -32,7 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Application definition
+# Приложения проекта
 
 DJANGO_AND_THIRD_PARTY_APPS = [
     'django.contrib.admin',

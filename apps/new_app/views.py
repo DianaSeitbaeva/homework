@@ -1,3 +1,4 @@
+from http.client import HTTPResponse
 from multiprocessing import context
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse, QueryDict
@@ -7,6 +8,23 @@ from django.contrib.auth import (
     login as dj_login,
     logout as dj_logout,
 )
+
+
+class StudentViewSet(ViewSet):
+    queryset
+    permission_classes
+    filters
+
+
+class IndexView(View):
+    def get(
+        self,
+        request,
+        WSGIRequest,
+        *args: tuple,
+        **kwards
+    ):
+        return HTTPResponse('Hello world!')
 
 from new_app.models import (
     # Account, 
@@ -23,19 +41,19 @@ def index(request: WSGIRequest) -> HttpResponse:
     if not request.user.is_authenticated:
         return render(
             request,
-            'university/login.html'
+            'login.html'
         )
     homework: QuerySet = Homework.objects.filter(
         user=request.user
     )
     context: dict = {
         'ctx_title': 'Главная страница',
-        'ctx_users' : users,
+        'ctx_users' : homework,
     }
     return render(
         request,
-        'admin.html',
-        context,
+        template_name='index.html',
+        context=context,
     )
 
 def admin(request: WSGIRequest) -> HttpResponse:
@@ -79,13 +97,13 @@ def login(request: WSGIRequest) -> HttpResponse:
         if not user:
             return render(
                 request,
-                'university/login.html',
+                'login.html',
                 {'error_message': 'Невереные данные'}
             )
         if not user.is_active:
             return render(
                 request,
-                'university/login.html',
+                'login.html',
                 {'error_message': 'Ваш аккаунт был удален'}
             )
         dj_login(request, user)
@@ -95,12 +113,12 @@ def login(request: WSGIRequest) -> HttpResponse:
         )
         return render(
             request,
-            'university/index.html',
+            'index.html',
             {'homeworks': homeworks}
         )
     return render(
         request,
-        'university/login.html'
+        'login.html'
     )
 
 def logout(request: WSGIRequest) -> HttpResponse:
@@ -115,7 +133,7 @@ def logout(request: WSGIRequest) -> HttpResponse:
     }
     return render(
         request,
-        'university/login.html',
+        'login.html',
         context
     )
 
@@ -147,7 +165,7 @@ def register(request: WSGIRequest) -> HttpResponse:
             )
             return render(
                 request,
-                'university/index.html',
+                'index.html',
                 {'homeworks': homeworks}
             )
     context: dict = {
@@ -155,6 +173,6 @@ def register(request: WSGIRequest) -> HttpResponse:
     }
     return render(
         request,
-        'university/register.html',
+        'register.html',
         context
     )
