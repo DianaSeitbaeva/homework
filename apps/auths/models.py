@@ -8,7 +8,6 @@ from django.contrib.auth.models import (
 )
 from django.db import (
     models, 
-    QuerySet,
 )
 
 from django.contrib.auth.base_user import BaseUserManager
@@ -115,8 +114,8 @@ class Homework(AbstractDateTime):
         on_delete=models.PROTECT,
     )
 
-class FileQuerySet(QuerySet):
-    def get_is_checked(self) -> QuerySet:
+class FileQuerySet(models.QuerySet):
+    def get_is_checked(self) -> models.QuerySet:
         return self.filter(
             homework__is_checked = True
         )
