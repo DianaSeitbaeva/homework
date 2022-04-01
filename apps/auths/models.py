@@ -80,42 +80,4 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         )
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
-
-
-class File(AbstractDateTime):
-    title_file = models.CharField(
-        max_length=35,
-    )
-    file = models.FileField(
-        upload_to='%d.%m.%Y',
-        max_length=150,
-    )
     
-
-class Homework(AbstractDateTime):
-    title_homework = models.CharField(
-        max_length=35,
-    ) 
-    subject = models.CharField(
-        max_length=35,
-    ) 
-    logo = models.ImageField(
-        upload_to='%d.%m.%Y',
-    )
-    is_checked = models.BooleanField(
-        max_length=35
-    )
-    homework = models.ForeignKey(
-        File, 
-        on_delete=models.PROTECT,
-    )
-    user = models.ForeignKey(
-        CustomUser,
-        on_delete=models.PROTECT,
-    )
-
-class FileQuerySet(models.QuerySet):
-    def get_is_checked(self) -> models.QuerySet:
-        return self.filter(
-            homework__is_checked = True
-        )

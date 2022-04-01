@@ -197,3 +197,53 @@ class Professor(AbstractDateTime):
         )
         verbose_name = 'Преподаватель'
         verbose_name_plural = 'Преподаватели'
+
+
+class FileQuerySet(models.QuerySet):
+    def get_is_checked(self) -> models.QuerySet:
+        return self.filter(
+            homework__is_checked = True
+        )
+
+
+class File(AbstractDateTime):
+    title_file = models.CharField(
+        max_length=35,
+    )
+    file = models.FileField(
+        upload_to='%d.%m.%Y',
+        max_length=150,
+    )
+
+
+class Homework(AbstractDateTime):
+    title_homework = models.CharField(
+        max_length=35,
+    ) 
+    subject = models.CharField(
+        max_length=35,
+    ) 
+    logo = models.ImageField(
+        upload_to='%d.%m.%Y',
+    )
+    is_checked = models.BooleanField(
+        max_length=35
+    )
+    homework = models.ForeignKey(
+        File, 
+        on_delete=models.PROTECT,
+    )
+    user = models.ForeignKey(
+        CustomUser,
+        on_delete=models.PROTECT,
+    )
+
+    objects = HomeworkQuerySet.as_manager()
+
+    @property
+    def is_checked(self) -> bool:
+        return all(
+            self.files.values_list(
+                'is_checked', flat=True
+            )
+        )

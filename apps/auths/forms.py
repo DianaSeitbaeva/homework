@@ -2,8 +2,6 @@ from dataclasses import fields
 from multiprocessing import context
 from pyexpat import model
 from re import template
-from tkinter.tix import IMAGE
-from turtle import home
 from unittest import loader
 from wsgiref.simple_server import WSGIRequestHandler
 from django.contrib.auth.forms import (
@@ -12,7 +10,13 @@ from django.contrib.auth.forms import (
 )
 from django.http import HttpResponse
 from django.shortcuts import render
-from auths.models import CustomUser, Homework
+from auths.models import CustomUser
+from new_app.models import Homework
+from apps.abstracts.handlers import ViewHandler
+from django.views import View
+from django.core.handlers.wsgi import WSGIRequest
+from django.http import HttpResponse
+
 
 class CustomUserCreationForm(UserCreationForm):
 
@@ -21,6 +25,7 @@ class CustomUserCreationForm(UserCreationForm):
         fields = (
             'email',
         )
+
 
 class CustomUserChangeForm(UserChangeForm):
     
